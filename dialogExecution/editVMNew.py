@@ -30,6 +30,7 @@ import errors.logID
 import errors.errCodes
 from dialogExecution.errDialog import ErrDialog
 import plugins.pluginmgr.hw_reader as hwpr # HWPR = HardWare Plug-in Reader
+import services.pathfinder as pf
 
 class EditVMNewDialog(QDialog, Ui_Dialog):
     def __init__(self, parent=None):
@@ -41,6 +42,7 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
             
         self.logman = errors.logman.LogMan()
         self.logman.logFile = self.logman.setLogFile()
+        self.exec_folder = pf.retrieveExecFolder()
         self.setupUi(self)
         self.connectSignalsSlots()
         self.tabWidget.setCurrentIndex(0)
@@ -49,7 +51,7 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         self.langDetect()
         
         try:
-            self.setWindowIcon(QtGui.QIcon("EmuGUI.png"))
+            self.setWindowIcon(QtGui.QIcon(f"{self.exec_folder}EmuGUI.png"))
 
         except:
             pass
@@ -299,183 +301,14 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
                 dialog = ErrDialog(self)
                 dialog.exec()
 
-    def machineCpuI386Amd64(self, machine, cpu):
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
-            letQemuDecideContent = letQemuDecideFile.read()
-
-        i = 0
-
-        while i < self.comboBox_12.count():
-            if letQemuDecideContent.__contains__(self.comboBox_12.itemText(i)):
-                if machine == "Let QEMU decide":
-                    self.comboBox_12.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_12.itemText(i) == machine:
-                self.comboBox_12.setCurrentIndex(i)
-                break
-
-            i += 1
-
-        i = 0
-
-        while i < self.comboBox_11.count():
-            if letQemuDecideContent.__contains__(self.comboBox_11.itemText(i)):
-                if cpu == "Let QEMU decide":
-                    self.comboBox_11.setCurrentIndex(i)
-                    break
-
-            if self.comboBox_11.itemText(i) == "Icelake-Client (depreciated)":
-                if cpu == "Icelake-Client":
-                    self.comboBox_11.setCurrentIndex(i)
-                    break
-
-            if self.comboBox_11.itemText(i) == cpu:
-                self.comboBox_11.setCurrentIndex(i)
-                break
-
-            i += 1
-
-    def machineCpuPpc(self, machine, cpu):
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
-            letQemuDecideContent = letQemuDecideFile.read()
-
-        i = 0
-
-        while i < self.comboBox_14.count():
-            if letQemuDecideContent.__contains__(self.comboBox_14.itemText(i)):
-                if machine == "Let QEMU decide":
-                    self.comboBox_14.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_14.itemText(i) == machine:
-                self.comboBox_14.setCurrentIndex(i)
-                break
-
-            i += 1
-
-        i = 0
-
-        while i < self.comboBox_13.count():
-            if letQemuDecideContent.__contains__(self.comboBox_13.itemText(i)):
-                if cpu == "Let QEMU decide":
-                    self.comboBox_13.setCurrentIndex(i)
-                    break
-
-            if self.comboBox_13.itemText(i) == cpu:
-                self.comboBox_13.setCurrentIndex(i)
-                break
-
-            i += 1
-
-    def machineCpuMips64el(self, machine, cpu):
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
-            letQemuDecideContent = letQemuDecideFile.read()
-
-        i = 0
-
-        while i < self.comboBox_16.count():
-            if letQemuDecideContent.__contains__(self.comboBox_16.itemText(i)):
-                if machine == "Let QEMU decide":
-                    self.comboBox_16.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_16.itemText(i) == machine:
-                self.comboBox_16.setCurrentIndex(i)
-                break
-
-            i += 1
-
-        i = 0
-
-        while i < self.comboBox_15.count():
-            if letQemuDecideContent.__contains__(self.comboBox_15.itemText(i)):
-                if cpu == "Let QEMU decide":
-                    self.comboBox_15.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_15.itemText(i) == cpu:
-                self.comboBox_15.setCurrentIndex(i)
-                break
-
-            i += 1
-
-    def machineCpuAarch64(self, machine, cpu):
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
-            letQemuDecideContent = letQemuDecideFile.read()
-
-        i = 0
-
-        while i < self.comboBox_18.count():
-            if letQemuDecideContent.__contains__(self.comboBox_18.itemText(i)):
-                if machine == "Let QEMU decide":
-                    self.comboBox_18.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_18.itemText(i) == machine:
-                self.comboBox_18.setCurrentIndex(i)
-                break
-
-            i += 1
-
-        i = 0
-
-        while i < self.comboBox_17.count():
-            if letQemuDecideContent.__contains__(self.comboBox_17.itemText(i)):
-                if cpu == "Let QEMU decide":
-                    self.comboBox_17.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_17.itemText(i) == cpu:
-                self.comboBox_17.setCurrentIndex(i)
-                break
-
-            i += 1
-
-    def machineSparc(self, machine):
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
-            letQemuDecideContent = letQemuDecideFile.read()
-
-        i = 0
-
-        while i < self.comboBox_20.count():
-            if letQemuDecideContent.__contains__(self.comboBox_20.itemText(i)):
-                if machine == "Let QEMU decide":
-                    self.comboBox_20.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_20.itemText(i) == machine:
-                self.comboBox_20.setCurrentIndex(i)
-                break
-
-            i += 1
-
-    def machineSparc64(self, machine):
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
-            letQemuDecideContent = letQemuDecideFile.read()
-
-        i = 0
-
-        while i < self.comboBox_21.count():
-            if letQemuDecideContent.__contains__(self.comboBox_21.itemText(i)):
-                if machine == "Let QEMU decide":
-                    self.comboBox_21.setCurrentIndex(i)
-                    break
-
-            elif self.comboBox_21.itemText(i) == machine:
-                self.comboBox_21.setCurrentIndex(i)
-                break
-
-            i += 1
-
     def vhdAddingChange(self):
-        with open("translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
+        with open(f"{self.exec_folder}translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
             creNewVhdContent = creNewVhdFile.read()
 
-        with open("translations/addexistingvhd.txt", "r+", encoding="utf8") as addExistVhdFile:
+        with open(f"{self.exec_folder}translations/addexistingvhd.txt", "r+", encoding="utf8") as addExistVhdFile:
             addExistVhdContent = addExistVhdFile.read()
 
-        with open("translations/addnovhd.txt", "r+", encoding="utf8") as noVhdFile:
+        with open(f"{self.exec_folder}translations/addnovhd.txt", "r+", encoding="utf8") as noVhdFile:
             noVhdContent = noVhdFile.read()
 
         if creNewVhdContent.__contains__(self.cb_vhdu.currentText()):
@@ -509,10 +342,10 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
             self.cb_hddc.setEnabled(False)
 
     def vhdBrowseLocation(self):
-        with open("translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
+        with open(f"{self.exec_folder}translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
             creNewVhdContent = creNewVhdFile.read()
 
-        with open("translations/addexistingvhd.txt", "r+", encoding="utf8") as addExistVhdFile:
+        with open(f"{self.exec_folder}translations/addexistingvhd.txt", "r+", encoding="utf8") as addExistVhdFile:
             addExistVhdContent = addExistVhdFile.read()
 
         if creNewVhdContent.__contains__(self.comboBox_2.currentText()):        
@@ -761,16 +594,16 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
                 pass
 
     def readTempVmFile(self):
-        with open("translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
+        with open(f"{self.exec_folder}translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
             creNewVhdContent = creNewVhdFile.read()
 
-        with open("translations/addexistingvhd.txt", "r+", encoding="utf8") as addExistVhdFile:
+        with open(f"{self.exec_folder}translations/addexistingvhd.txt", "r+", encoding="utf8") as addExistVhdFile:
             addExistVhdContent = addExistVhdFile.read()
 
-        with open("translations/addnovhd.txt", "r+", encoding="utf8") as noVhdFile:
+        with open(f"{self.exec_folder}translations/addnovhd.txt", "r+", encoding="utf8") as noVhdFile:
             noVhdContent = noVhdFile.read()
 
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
+        with open(f"{self.exec_folder}translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideFile:
             letQemuDecideContent = letQemuDecideFile.read()
 
         # Searching temporary files
@@ -834,30 +667,6 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
             i += 1
 
         self.sb_ram.setValue(int(vmSpecs[4]))
-
-        """ if vmSpecs[1] == "i386" or vmSpecs[1] == "x86_64":
-            self.machineCpuI386Amd64(vmSpecs[2], vmSpecs[3])
-            self.sb_ram.setValue(int(vmSpecs[4]))
-
-        elif vmSpecs[1] == "mips64el" or vmSpecs[1] == "mipsel" or vmSpecs[1] == "mips64" or vmSpecs[1] == "mips":
-            self.machineCpuMips64el(vmSpecs[2], vmSpecs[3])
-            self.sb_ram.setValue(int(vmSpecs[4]))
-
-        elif vmSpecs[1] == "ppc" or vmSpecs[1] == "ppc64":
-            self.machineCpuPpc(vmSpecs[2], vmSpecs[3])
-            self.sb_ram.setValue(int(vmSpecs[4]))
-
-        elif vmSpecs[1] == "aarch64" or vmSpecs[1] == "arm":
-            self.machineCpuAarch64(vmSpecs[2], vmSpecs[3])
-            self.sb_ram.setValue(int(vmSpecs[4]))
-
-        elif vmSpecs[1] == "sparc":
-            self.machineSparc(vmSpecs[2])
-            self.sb_ram.setValue(int(vmSpecs[4]))
-
-        elif vmSpecs[1] == "sparc64":
-            self.machineSparc64(vmSpecs[2])
-            self.sb_ram.setValue(int(vmSpecs[4])) """
 
         if vmSpecs[5] != "NULL":
             self.le_vhdp.setText(vmSpecs[5])
@@ -1031,10 +840,10 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         return vmSpecs
 
     def finishCreation(self):
-        with open("translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideVariants:
+        with open(f"{self.exec_folder}translations/letqemudecide.txt", "r+", encoding="utf8") as letQemuDecideVariants:
             letQemuDecideVariantsStr = letQemuDecideVariants.read()
 
-        with open("translations/systemdefault.txt", "r+", encoding="utf8") as sysDefFile:
+        with open(f"{self.exec_folder}translations/systemdefault.txt", "r+", encoding="utf8") as sysDefFile:
             sysDefContent = sysDefFile.read()
 
         # This applies the changes to your VM.

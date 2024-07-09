@@ -30,6 +30,7 @@ import translations.pl
 import locale
 import errors.errCodes
 from dialogExecution.errDialog import ErrDialog
+import services.pathfinder as pf
 
 class StartVirtualMachineDialog(QDialog, Ui_Dialog):
     # Initializing VM starting
@@ -41,6 +42,7 @@ class StartVirtualMachineDialog(QDialog, Ui_Dialog):
             super().__init__()
             
         self.setupUi(self)
+        self.exec_folder = pf.retrieveExecFolder()
         self.connectSignalsSlots()
         
 
@@ -66,7 +68,7 @@ class StartVirtualMachineDialog(QDialog, Ui_Dialog):
         self.timeUsageTrigger()
         
         try:
-            self.setWindowIcon(QtGui.QIcon("EmuGUI.png"))
+            self.setWindowIcon(QtGui.QIcon(f"{self.exec_folder}EmuGUI.png"))
 
         except:
             pass

@@ -23,6 +23,7 @@ import translations.it
 import translations.pl
 import locale
 import sqlite3
+import services.pathfinder as pf
 
 class ErrDialog(QDialog, Ui_Dialog):
     def __init__(self, parent = None):
@@ -33,10 +34,11 @@ class ErrDialog(QDialog, Ui_Dialog):
             super().__init__()
             
         self.setupUi(self)
+        self.exec_folder = pf.retrieveExecFolder()
         self.setWindowTitle("EmuGUI - Error")
         
         try:
-            self.setWindowIcon(QtGui.QIcon("EmuGUI.png"))
+            self.setWindowIcon(QtGui.QIcon(f"{self.exec_folder}EmuGUI.png"))
 
         except:
             pass
