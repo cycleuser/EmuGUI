@@ -1,0 +1,8 @@
+{
+    "alpha_cpus": [
+        "base", "max", "host", "ev4-alpha-cpu", "ev5-alpha-cpu", "ev56-alpha-cpu", "ev6-alpha-cpu", "ev67-alpha-cpu", "ev68-alpha-cpu", "pca56-alpha-cpu"
+    ],
+    "alpha_machines": [
+        "none", "clipper"
+    ]
+}

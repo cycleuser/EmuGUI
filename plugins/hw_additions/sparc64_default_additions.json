@@ -1,0 +1,8 @@
+{
+    "sparc64_cpus": [
+        "base", "max", "host"
+    ],
+    "sparc64_machines": [
+        "none", "niagara", "sun4u", "sun4v"
+    ]
+}

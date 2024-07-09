@@ -238,7 +238,7 @@
          </widget>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
-           <string>QEMU</string>
+           <string>QEMU (1)</string>
           </attribute>
           <widget class="QWidget" name="gridLayoutWidget_2">
            <property name="geometry">
@@ -246,77 +246,14 @@
              <x>0</x>
              <y>0</y>
              <width>781</width>
-             <height>491</height>
+             <height>498</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_2">
-            <item row="3" column="2">
-             <widget class="QLineEdit" name="lineEdit_2"/>
-            </item>
-            <item row="8" column="2">
-             <widget class="QLineEdit" name="lineEdit_7"/>
-            </item>
-            <item row="6" column="3">
-             <widget class="QPushButton" name="pushButton_5">
+            <item row="0" column="1">
+             <widget class="QLabel" name="label">
               <property name="text">
-               <string>Browse</string>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="2">
-             <widget class="QLineEdit" name="lineEdit_12"/>
-            </item>
-            <item row="9" column="1">
-             <widget class="QLabel" name="label_16">
-              <property name="text">
-               <string>qemu-system-ppc64 path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="1">
-             <widget class="QLabel" name="label_18">
-              <property name="text">
-               <string>qemu-system-mips path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLineEdit" name="lineEdit_5"/>
-            </item>
-            <item row="7" column="2">
-             <widget class="QLineEdit" name="lineEdit_6"/>
-            </item>
-            <item row="10" column="2">
-             <widget class="QLineEdit" name="lineEdit_9"/>
-            </item>
-            <item row="10" column="1">
-             <widget class="QLabel" name="label_17">
-              <property name="text">
-               <string>qemu-system-mipsel path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QLabel" name="label_11">
-              <property name="text">
-               <string>qemu-system-arm path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="2">
-             <widget class="QLineEdit" name="lineEdit"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>qemu-system-i386 path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="3">
-             <widget class="QPushButton" name="pushButton_16">
-              <property name="text">
-               <string>Browse</string>
+               <string>qemu-img Path</string>
               </property>
              </widget>
             </item>
@@ -327,22 +264,12 @@
               </property>
              </widget>
             </item>
-            <item row="6" column="1">
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>qemu-system-mips64el path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="QPushButton" name="pushButton">
+            <item row="7" column="3">
+             <widget class="QPushButton" name="pushButton_7">
               <property name="text">
                <string>Browse</string>
               </property>
              </widget>
-            </item>
-            <item row="9" column="2">
-             <widget class="QLineEdit" name="lineEdit_8"/>
             </item>
             <item row="13" column="1">
              <widget class="QLabel" name="label_12">
@@ -351,15 +278,41 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="2">
-             <widget class="QLineEdit" name="lineEdit_3"/>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="label">
+            <item row="15" column="1">
+             <widget class="QLabel" name="lbl_alpha">
               <property name="text">
-               <string>qemu-img Path</string>
+               <string>qemu-system-alpha path</string>
               </property>
              </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>qemu-system-mips64el path</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="lineEdit_5"/>
+            </item>
+            <item row="11" column="2">
+             <widget class="QLineEdit" name="lineEdit_10"/>
+            </item>
+            <item row="9" column="3">
+             <widget class="QPushButton" name="pushButton_16">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="2">
+             <widget class="QLineEdit" name="lineEdit_12"/>
+            </item>
+            <item row="14" column="2">
+             <widget class="QLineEdit" name="lineEdit_13"/>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLineEdit" name="lineEdit"/>
             </item>
             <item row="3" column="3">
              <widget class="QPushButton" name="pushButton_4">
@@ -368,8 +321,18 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QLineEdit" name="lineEdit_4"/>
+            <item row="12" column="2">
+             <widget class="QLineEdit" name="lineEdit_11"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>qemu-system-ppc path</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="2">
+             <widget class="QLineEdit" name="lineEdit_8"/>
             </item>
             <item row="8" column="3">
              <widget class="QPushButton" name="pushButton_12">
@@ -378,27 +341,10 @@
               </property>
              </widget>
             </item>
-            <item row="13" column="3">
-             <widget class="QPushButton" name="pushButton_13">
+            <item row="8" column="1">
+             <widget class="QLabel" name="label_11">
               <property name="text">
-               <string>Browse</string>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="2">
-             <widget class="QLineEdit" name="lineEdit_11"/>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>qemu-system-x86_64 path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>qemu-system-ppc path</string>
+               <string>qemu-system-arm path</string>
               </property>
              </widget>
             </item>
@@ -409,6 +355,37 @@
               </property>
              </widget>
             </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>qemu-system-x86_64 path</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLineEdit" name="lineEdit_2"/>
+            </item>
+            <item row="16" column="1">
+             <widget class="QLabel" name="lbl_riscv32">
+              <property name="text">
+               <string>qemu-system-riscv32 path</string>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="1">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>qemu-system-mips path</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>qemu-system-i386 path</string>
+              </property>
+             </widget>
+            </item>
             <item row="12" column="1">
              <widget class="QLabel" name="label_19">
               <property name="text">
@@ -416,15 +393,15 @@
               </property>
              </widget>
             </item>
-            <item row="7" column="1">
-             <widget class="QLabel" name="label_9">
+            <item row="10" column="1">
+             <widget class="QLabel" name="label_17">
               <property name="text">
-               <string>qemu-system-aarch64 path</string>
+               <string>qemu-system-mipsel path</string>
               </property>
              </widget>
             </item>
-            <item row="7" column="3">
-             <widget class="QPushButton" name="pushButton_7">
+            <item row="15" column="3">
+             <widget class="QPushButton" name="btn_alpha">
               <property name="text">
                <string>Browse</string>
               </property>
@@ -437,32 +414,18 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="3">
-             <widget class="QPushButton" name="pushButton_3">
+            <item row="16" column="3">
+             <widget class="QPushButton" name="btn_riscv32">
               <property name="text">
                <string>Browse</string>
               </property>
              </widget>
             </item>
-            <item row="15" column="3">
-             <widget class="QPushButton" name="pushButton_6">
-              <property name="text">
-               <string>Apply</string>
-              </property>
-             </widget>
+            <item row="16" column="2">
+             <widget class="QLineEdit" name="le_riscv32"/>
             </item>
-            <item row="11" column="2">
-             <widget class="QLineEdit" name="lineEdit_10"/>
-            </item>
-            <item row="11" column="3">
-             <widget class="QPushButton" name="pushButton_18">
-              <property name="text">
-               <string>Browse</string>
-              </property>
-             </widget>
-            </item>
-            <item row="14" column="2">
-             <widget class="QLineEdit" name="lineEdit_13"/>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="lineEdit_3"/>
             </item>
             <item row="14" column="1">
              <widget class="QLabel" name="label_13">
@@ -471,12 +434,124 @@
               </property>
              </widget>
             </item>
+            <item row="8" column="2">
+             <widget class="QLineEdit" name="lineEdit_7"/>
+            </item>
+            <item row="11" column="3">
+             <widget class="QPushButton" name="pushButton_18">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QPushButton" name="pushButton_3">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="2">
+             <widget class="QLineEdit" name="lineEdit_6"/>
+            </item>
+            <item row="6" column="3">
+             <widget class="QPushButton" name="pushButton_5">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="2">
+             <widget class="QLineEdit" name="lineEdit_9"/>
+            </item>
+            <item row="13" column="3">
+             <widget class="QPushButton" name="pushButton_13">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="2">
+             <widget class="QLineEdit" name="le_alpha"/>
+            </item>
             <item row="14" column="3">
              <widget class="QPushButton" name="pushButton_14">
               <property name="text">
                <string>Browse</string>
               </property>
              </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="lineEdit_4"/>
+            </item>
+            <item row="9" column="1">
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>qemu-system-ppc64 path</string>
+              </property>
+             </widget>
+            </item>
+            <item row="17" column="3">
+             <widget class="QPushButton" name="pushButton_6">
+              <property name="text">
+               <string>Apply</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>qemu-system-aarch64 path</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="tab_5">
+          <attribute name="title">
+           <string>QEMU (2)</string>
+          </attribute>
+          <widget class="QWidget" name="gridLayoutWidget_5">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>781</width>
+             <height>498</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="2" column="3">
+             <widget class="QPushButton" name="btn_riscv64">
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="lbl_riscv64">
+              <property name="text">
+               <string>qemu-system-riscv64 path</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QPushButton" name="btn_apply_qemu2">
+              <property name="text">
+               <string>Apply</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="le_riscv64"/>
             </item>
            </layout>
           </widget>
@@ -558,6 +633,27 @@
             </item>
             <item row="6" column="0">
              <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="4">
+               <widget class="QPushButton" name="pushButton_25">
+                <property name="text">
+                 <string>Odysee</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QPushButton" name="pushButton_24">
+                <property name="text">
+                 <string>YouTube</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="pushButton_20">
+                <property name="text">
+                 <string>GitHub</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_21">
                 <property name="text">
@@ -572,24 +668,10 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="pushButton_20">
+              <item row="0" column="5">
+               <widget class="QPushButton" name="btn_guilded">
                 <property name="text">
-                 <string>GitHub</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QPushButton" name="pushButton_24">
-                <property name="text">
-                 <string>YouTube</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QPushButton" name="pushButton_25">
-                <property name="text">
-                 <string>Odysee</string>
+                 <string>Guilded</string>
                 </property>
                </widget>
               </item>
@@ -611,14 +693,13 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
   <tabstop>listView</tabstop>
   <tabstop>pushButton_8</tabstop>
   <tabstop>pushButton_9</tabstop>
@@ -654,9 +735,21 @@
   <tabstop>pushButton_13</tabstop>
   <tabstop>lineEdit_13</tabstop>
   <tabstop>pushButton_14</tabstop>
+  <tabstop>le_alpha</tabstop>
+  <tabstop>btn_alpha</tabstop>
+  <tabstop>le_riscv32</tabstop>
+  <tabstop>btn_riscv32</tabstop>
   <tabstop>pushButton_6</tabstop>
   <tabstop>pushButton_20</tabstop>
   <tabstop>pushButton_21</tabstop>
+  <tabstop>pushButton_22</tabstop>
+  <tabstop>pushButton_23</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>btn_riscv64</tabstop>
+  <tabstop>btn_apply_qemu2</tabstop>
+  <tabstop>le_riscv64</tabstop>
+  <tabstop>pushButton_24</tabstop>
+  <tabstop>pushButton_25</tabstop>
  </tabstops>
  <resources/>
  <connections/>

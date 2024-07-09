@@ -15,7 +15,7 @@ def translateMainBE(window):
 
     # Settings tabs
     window.tabWidget_2.setTabText(0, "Агульныя") # General
-    window.tabWidget_2.setTabText(2, "Аб EmuGUI") # About EmuGUI
+    window.tabWidget_2.setTabText(3, "Аб EmuGUI") # About EmuGUI
 
     # General tab
     window.label_15.setText("Мова") # Language
@@ -51,6 +51,9 @@ def translateMainBE(window):
     window.label_19.setText("Шлях да qemu-system-mips64") # qemu-system-mips64 Path
     window.label_12.setText("Шлях да qemu-system-sparc") # qemu-system-sparc Path
     window.label_13.setText("Шлях да qemu-system-sparc64") # qemu-system-sparc64 Path
+    window.lbl_alpha.setText("Шлях да qemu-system-alpha") # qemu-system-alpha Path
+    window.lbl_riscv32.setText("Шлях да qemu-system-riscv32") # qemu-system-riscv32 Path
+    window.lbl_riscv64.setText("Шлях да qemu-system-riscv64") # qemu-system-riscv64 Path
 
     window.pushButton.setText("Агляд") # Browse
     window.pushButton_2.setText("Агляд") # Browse
@@ -65,7 +68,11 @@ def translateMainBE(window):
     window.pushButton_19.setText("Агляд") # Browse
     window.pushButton_13.setText("Агляд") # Browse
     window.pushButton_14.setText("Агляд") # Browse
+    window.btn_alpha.setText("Агляд") # Browse
+    window.btn_riscv32.setText("Агляд") # Browse
+    window.btn_riscv64.setText("Агляд") # Browse
     window.pushButton_6.setText("Ужыць") # Apply
+    window.btn_apply_qemu2.setText("Ужыць") # Apply
 
     # About tab
     # label_7 = Built on Python and PyQt technology, licensed under GNU General Public License 3.0
@@ -86,310 +93,177 @@ def translateNewVmBE(window):
     window.setWindowTitle("EmuGUI - Create new VM")
 
     # First page
-    window.label.setText("Назва") # Name
-    window.label_3.setText("Архітэктура") # Architecture
-    window.comboBox.setPlaceholderText("Калі ласка, абярыце архітэктуру") # Please choose an architecture
+    window.lbl_vmname.setText("Назва") # Name
+    window.lbl_arch.setText("Архітэктура") # Architecture
+    window.cb_arch.setPlaceholderText("Please choose an architecture") # Please choose an architecture
 
-    window.pushButton_3.setText("Далей >") # Next >
-    window.pushButton_2.setText("Адмена") # Cancel
+    window.btn_next1.setText("Далей >") # Next >
+    window.btn_cancel1.setText("Адмена") # Cancel
 
-    # Second page (i386/x64 machines)
-    window.label_4.setText("Машына") # Machine
-    window.label_5.setText("Працэсар") # CPU
-    window.label_6.setText("АЗП у MB") # RAM in MB
+    # Second page
+    window.lbl_machine.setText("Машына") # Machine
+    window.lbl_cpu.setText("Працэсар") # CPU
+    window.lbl_ram.setText("АЗП у MB") # RAM in MB
 
-    window.comboBox_2.setPlaceholderText("Калі ласка абярыце машыну") # Please select a machine
-    window.comboBox_3.setPlaceholderText("Калі ласка абярыце працэсар") # Please select a processor
+    window.cb_machine.setPlaceholderText("Please select a machine") # Please select a machine
+    window.cb_cpu.setPlaceholderText("Please select a processor") # Please select a processor
 
-    window.pushButton_5.setText("< Назад") # < Previous
-    window.pushButton_4.setText("Далей >") # Next >
-    window.pushButton_6.setText("Адмена") # Cancel
+    window.pb_prev2.setText("< Назад") # < Previous
+    window.pb_next2.setText("Далей >") # Next >
+    window.pb_cancel2.setText("Адмена") # Cancel
 
-    # Combo boxes on i386/x64 page
+    # Combo boxes on second page
     i = 0
 
-    while i < window.comboBox_2.count():
-        if window.comboBox_2.itemText(i) == "Let QEMU decide" or window.comboBox_2.itemText(i) == "QEMU überlassen":
-            window.comboBox_2.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_machine.count():
+        if window.cb_machine.itemText(i) == "Let QEMU decide" or window.cb_machine.itemText(i) == "QEMU überlassen":
+            window.cb_machine.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_3.count():
-        if window.comboBox_3.itemText(i) == "Let QEMU decide" or window.comboBox_3.itemText(i) == "QEMU überlassen":
-            window.comboBox_3.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # Second page (PowerPC machines)
-    window.label_9.setText("Машына") # Machine
-    window.label_8.setText("Працэсар") # CPU
-    window.label_7.setText("АЗП у MB") # RAM in MB
-
-    window.comboBox_4.setPlaceholderText("Калі ласка абярыце машыну") # Please select a machine
-    window.comboBox_5.setPlaceholderText("Калі ласка абярыце працэсар") # Please select a processor
-
-    window.pushButton_7.setText("< Назад") # < Previous
-    window.pushButton_8.setText("Далей >") # Next >
-    window.pushButton_9.setText("Адмена") # Cancel
-
-    # Combo boxes on PPC page
-    i = 0
-
-    while i < window.comboBox_4.count():
-        if window.comboBox_4.itemText(i) == "Let QEMU decide" or window.comboBox_4.itemText(i) == "QEMU überlassen":
-            window.comboBox_4.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    i = 0
-
-    while i < window.comboBox_5.count():
-        if window.comboBox_5.itemText(i) == "Let QEMU decide" or window.comboBox_5.itemText(i) == "QEMU überlassen":
-            window.comboBox_5.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # Second page (MIPSel machines)
-    window.label_12.setText("Машына") # Machine
-    window.label_11.setText("Працэсар") # CPU
-    window.label_10.setText("АЗП у MB") # RAM in MB
-
-    window.comboBox_6.setPlaceholderText("Калі ласка абярыце машыну") # Please select a machine
-    window.comboBox_7.setPlaceholderText("Калі ласка абярыце працэсар") # Please select a processor
-
-    window.pushButton_10.setText("< Назад") # < Previous
-    window.pushButton_11.setText("Далей >") # Next >
-    window.pushButton_12.setText("Адмена") # Cancel
-
-    # Combo boxes on MIPSel page
-    i = 0
-
-    while i < window.comboBox_6.count():
-        if window.comboBox_6.itemText(i) == "Let QEMU decide" or window.comboBox_6.itemText(i) == "QEMU überlassen":
-            window.comboBox_6.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    i = 0
-
-    while i < window.comboBox_7.count():
-        if window.comboBox_7.itemText(i) == "Let QEMU decide" or window.comboBox_7.itemText(i) == "QEMU überlassen":
-            window.comboBox_7.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # Second page (ARM machines)
-    window.label_31.setText("Машына") # Machine
-    window.label_30.setText("Працэсар") # CPU
-    window.label_29.setText("АЗП у MB") # RAM in MB
-
-    window.comboBox_14.setPlaceholderText("Калі ласка абярыце машыну") # Please select a machine
-    window.comboBox_15.setPlaceholderText("Калі ласка абярыце працэсар") # Please select a processor
-
-    window.pushButton_33.setText("< Назад") # < Previous
-    window.pushButton_34.setText("Далей >") # Next >
-    window.pushButton_35.setText("Адмена") # Cancel
-
-    # Combo boxes on ARM page
-    i = 0
-
-    while i < window.comboBox_14.count():
-        if window.comboBox_14.itemText(i) == "Let QEMU decide" or window.comboBox_14.itemText(i) == "QEMU überlassen":
-            window.comboBox_14.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    i = 0
-
-    while i < window.comboBox_15.count():
-        if window.comboBox_15.itemText(i) == "Let QEMU decide" or window.comboBox_15.itemText(i) == "QEMU überlassen":
-            window.comboBox_15.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # Second page (SPARC32 machines)
-    window.label_22.setText("Машына") # Machine
-    window.label_35.setText("АЗП у MB") # RAM in MB
-
-    window.comboBox_20.setPlaceholderText("Калі ласка абярыце машыну") # Please select a machine
-
-    window.pushButton_37.setText("< Назад") # < Previous
-    window.pushButton_38.setText("Далей >") # Next >
-    window.pushButton_39.setText("Адмена") # Cancel
-
-    # Combo boxes on SPARC32 page
-    i = 0
-
-    while i < window.comboBox_20.count():
-        if window.comboBox_20.itemText(i) == "Let QEMU decide" or window.comboBox_20.itemText(i) == "QEMU überlassen":
-            window.comboBox_20.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # Second page (SPARC64 machines)
-    window.label_37.setText("Машына") # Machine
-    window.label_36.setText("АЗП у MB") # RAM in MB
-
-    window.comboBox_21.setPlaceholderText("Калі ласка абярыце машыну") # Please select a machine
-
-    window.pushButton_41.setText("< Назад") # < Previous
-    window.pushButton_40.setText("Далей >") # Next >
-    window.pushButton_42.setText("Адмена") # Cancel
-
-    # Combo boxes on SPARC64 page
-    i = 0
-
-    while i < window.comboBox_21.count():
-        if window.comboBox_21.itemText(i) == "Let QEMU decide" or window.comboBox_21.itemText(i) == "QEMU überlassen":
-            window.comboBox_21.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_cpu.count():
+        if window.cb_cpu.itemText(i) == "Let QEMU decide" or window.cb_cpu.itemText(i) == "QEMU überlassen":
+            window.cb_cpu.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
     # Third page
-    window.label_20.setText("Выкарыстанне VHD") # VHD usage
+    window.lbl_vhdU.setText("Выкарыстанне VHD") # VHD usage
 
     # Combobox for VHD usage
     i = 0
 
-    while i < window.comboBox_18.count():
-        if window.comboBox_18.itemText(i) == "Create a new virtual hard drive":
-            window.comboBox_18.setItemText(i, "Стварыць новы віртуальны жорсткі дыск") # Create a new virtual hard drive
+    while i < window.cb_vhdU.count():
+        if window.cb_vhdU.itemText(i) == "Create a new virtual hard drive":
+            window.cb_vhdU.setItemText(i, "Стварыць новы віртуальны жорсткі дыск") # Create a new virtual hard drive
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_18.count():
-        if window.comboBox_18.itemText(i) == "Add an existing virtual hard drive":
-            window.comboBox_18.setItemText(i, "Дадаць існуючы віртуальны жорсткі дыск") # Add an existing virtual hard drive
+    while i < window.cb_vhdU.count():
+        if window.cb_vhdU.itemText(i) == "Add an existing virtual hard drive":
+            window.cb_vhdU.setItemText(i, "Дадаць існуючы віртуальны жорсткі дыск") # Add an existing virtual hard drive
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_18.count():
-        if window.comboBox_18.itemText(i) == "Don't add a virtual hard drive":
-            window.comboBox_18.setItemText(i, "Не дадаваць віртуальны жорсткі дыск") # Don't add a virtual hard drive
+    while i < window.cb_vhdU.count():
+        if window.cb_vhdU.itemText(i) == "Don't add a virtual hard drive":
+            window.cb_vhdU.setItemText(i, "Не дадаваць віртуальны жорсткі дыск") # Don't add a virtual hard drive
             break
 
         i += 1
 
-    window.label_13.setText("Шлях да VHD") # VHD path
-    window.label_14.setText("Фармат файла VHD") # VHD file format
-    window.label_15.setText("Максімальны памер") # Maximum size
-    window.label_73.setText("HDD controller") # HDD controller
+    window.lbl_vhdP.setText("Шлях да VHD") # VHD path
+    window.lbl_vhdF.setText("Фармат файла VHD") # VHD file format
+    window.lbl_maxsize.setText("Максімальны памер") # Maximum size
+    window.lbl_hddC.setText("HDD controller") # HDD controller
 
     i = 0
 
-    while i < window.comboBox_46.count():
-        if window.comboBox_46.itemText(i) == "Let QEMU decide" or window.comboBox_46.itemText(i) == "QEMU überlassen":
-            window.comboBox_46.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_hddC.count():
+        if window.cb_hddC.itemText(i) == "Let QEMU decide" or window.cb_hddC.itemText(i) == "QEMU überlassen":
+            window.cb_hddC.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
-    window.comboBox_8.setPlaceholderText("(Калі ласка, абярыце фармат файла)") # (Please select a file format)
+    window.cb_vhdF.setPlaceholderText("(Please select a file format)") # (Please select a file format)
 
-    window.pushButton_13.setText("Агляд") # Browse
-    window.pushButton_16.setText("< Назад") # < Previous
-    window.pushButton_14.setText("Далей >") # Next >
-    window.pushButton_15.setText("Адмена") # Cancel
+    window.btn_vhdP.setText("Агляд") # Browse
+    window.btn_prev3.setText("< Назад") # < Previous
+    window.btn_next3.setText("Далей >") # Next >
+    window.btn_cancel3.setText("Адмена") # Cancel
 
     # Fourth page
-    window.label_16.setText("VGA") # VGA
-    window.label_17.setText("Сетка") # Network
-    window.label_28.setText("Мыш") # Mouse
+    window.lbl_vga.setText("VGA") # VGA
+    window.lbl_net.setText("Сетка") # Network
+    window.lbl_mouse.setText("Мыш") # Mouse
 
-    window.comboBox_10.setPlaceholderText("(Калі ласка абярыце графічны адаптар)") # (Please select a graphics adapter)
-    window.comboBox_11.setPlaceholderText("(Калі ласка абярыце сеткавы адаптар)") # (Please select a network adapter)
+    window.cb_vga.setPlaceholderText("(Please select a graphics adapter)") # (Please select a graphics adapter)
+    window.cb_net.setPlaceholderText("(Please select a network adapter)") # (Please select a network adapter)
 
-    window.pushButton_18.setText("< Назад") # < Previous
-    window.pushButton_17.setText("Далей >") # Next >
-    window.pushButton_19.setText("Адмена") # Cancel
+    window.btn_prev4.setText("< Назад") # < Previous
+    window.btn_next4.setText("Далей >") # Next >
+    window.btn_cancel4.setText("Адмена") # Cancel
 
     # Fifth page
-    window.label_19.setText(
-        "Размяшчэнне знешняга\nфайла BIOS (Пакіньце\nпустым, каб выкарыстоўваць\nBIOS па змаўчанні)"
+    window.lbl_biosLoc.setText(
+        "Размяшчэнне знешняга файла BIOS (Пакіньце пустым, каб выкарыстоўваць BIOS па змаўчанні)"
         ) # Location of external\nBIOS file (Leave\nempty to use the\ndefault BIOS)
 
-    window.label_32.setText("Вонкавы файл BIOS") # External BIOS file
+    window.lbl_biosF.setText("Вонкавы файл BIOS") # External BIOS file
 
-    window.pushButton_36.setText("Агляд") # Browse
-    window.pushButton_25.setText("< Назад") # < Previous
-    window.pushButton_24.setText("Далей >") # Next >
-    window.pushButton_23.setText("Адмена") # Cancel
+    window.btn_biosF.setText("Агляд") # Browse
+    window.btn_prev5.setText("< Назад") # < Previous
+    window.btn_next5.setText("Далей >") # Next >
+    window.btn_cancel5.setText("Адмена") # Cancel
 
     # Sixth page
-    window.label_23.setText("Гукавая карта") # Sound card
-    window.label_33.setText("Ядра працэсара")# CPU cores
-    window.label_34.setText("Клавіятура") # Keyboard
-    window.label_21.setText("Раскладка клавіятуры") # Keyboard layout
+    window.lbl_sound.setText("Гукавая карта") # Sound card
+    window.lbl_cores.setText("Ядра працэсара")# CPU cores
+    window.lbl_kbd.setText("Клавіятура") # Keyboard
+    window.lbl_kbdlayout.setText("Раскладка клавіятуры") # Keyboard layout
 
-    window.pushButton_28.setText("< Назад") # < Previous
-    window.pushButton_27.setText("Далей >") # Next >
-    window.pushButton_26.setText("Адмена") # Cancel
+    window.btn_prev6.setText("< Назад") # < Previous
+    window.btn_next6.setText("Далей >") # Next >
+    window.btn_cancel6.setText("Адмена") # Cancel
 
     # Seventh page
-    window.label_24.setText("Ядро Linux") # Linux kernel
-    window.label_25.setText("Выява initrd Linux") # Linux initrd image
-    window.label_26.setText("Аргументы Linux cmd") # Linux cmd args
+    window.lbl_kernel.setText("Ядро Linux") # Linux kernel
+    window.lbl_initrd.setText("Выява initrd Linux") # Linux initrd image
+    window.lbl_cmd.setText("Аргументы Linux cmd") # Linux cmd args
 
-    window.pushButton.setText("Агляд") # Browse
-    window.pushButton_32.setText("Агляд") # Browse
-    window.pushButton_31.setText("< Назад") # < Previous
-    window.pushButton_30.setText("Далей >") # Next >
-    window.pushButton_29.setText("Адмена") # Cancel
+    window.btn_kernel.setText("Агляд") # Browse
+    window.btn_initrd.setText("Агляд") # Browse
+    window.btn_prev7.setText("< Назад") # < Previous
+    window.btn_next7.setText("Далей >") # Next >
+    window.btn_cancel7.setText("Адмена") # Cancel
 
     # Eighth page
-    window.label_71.setText("Acceleration") # Acceleration
-    window.label_70.setText("CD controller 1") # CD controller 1
-    window.label_72.setText("CD controller 2") # CD controller 2
+    window.lbl_accel.setText("Acceleration") # Acceleration
+    window.lbl_cdc1.setText("CD controller 1") # CD controller 1
+    window.lbl_cdc2.setText("CD controller 2") # CD controller 2
 
     i = 0
 
-    while i < window.comboBox_44.count():
-        if window.comboBox_44.itemText(i) == "Let QEMU decide" or window.comboBox_44.itemText(i) == "QEMU überlassen":
-            window.comboBox_44.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_cdc1.count():
+        if window.cb_cdc1.itemText(i) == "Let QEMU decide" or window.cb_cdc1.itemText(i) == "QEMU überlassen":
+            window.cb_cdc1.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_45.count():
-        if window.comboBox_45.itemText(i) == "Let QEMU decide" or window.comboBox_45.itemText(i) == "QEMU überlassen":
-            window.comboBox_45.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_cdc2.count():
+        if window.cb_cdc2.itemText(i) == "Let QEMU decide" or window.cb_cdc2.itemText(i) == "QEMU überlassen":
+            window.cb_cdc2.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
-    
-    window.pushButton_81.setText("< Назад") # < Previous
-    window.pushButton_77.setText("Далей >") # Next >
-    window.pushButton_80.setText("Адмена") # Cancel
+
+    window.btn_prev8.setText("< Назад") # < Previous
+    window.btn_next8.setText("Далей >") # Next >
+    window.btn_cancel8.setText("Адмена") # Cancel
 
     # Ninth page
-    window.label_2.setText("Дадатковыя аргументы (пры неабходнасці)") # Additional arguments (if needed)
+    window.lbl_addargs.setText("Дадатковыя аргументы (пры неабходнасці)") # Additional arguments (if needed)
 
     window.checkBox_2.setText("I want to install Windows 2000\n(depreciated)") # I want to install Windows 2000\n(depreciated)
-    window.checkBox_3.setText("Дадаць падтрымку USB") # Add USB support
+    window.chb_usb.setText("Дадаць падтрымку USB") # Add USB support
 
-    window.pushButton_22.setText("< Назад") # < Previous
-    window.pushButton_20.setText("Finish") # Finish
-    window.pushButton_21.setText("Адмена") # Cancel
+    window.btn_prev9.setText("< Назад") # < Previous
+    window.btn_finish.setText("Finish") # Finish
+    window.btn_cancel9.setText("Адмена") # Cancel
 
 def translateStartVmBE(window, vmname):
     window.setWindowTitle(f"EmuGUI - Start {vmname}")
@@ -474,8 +348,8 @@ def translateEditVMBE(window, vmname):
     window.setWindowTitle(f"EmuGUI - Edit {vmname}")
 
     # Buttons on all tabs
-    window.pushButton.setText("Адмена") # Cancel
-    window.pushButton_2.setText("OK") # OK
+    window.btn_cancel.setText("Адмена") # Cancel
+    window.btn_ok.setText("OK") # OK
 
     # Tab names
     window.tabWidget.setTabText(0, "Агульныя") # General
@@ -486,195 +360,124 @@ def translateEditVMBE(window, vmname):
     window.tabWidget.setTabText(6, "Дадатковыя кампаненты") # Additional components
 
     # Translations for General tab
-    window.label.setText("Назва") # Name
-    window.label_2.setText("Архітэктура") # Architecture
+    window.lbl_name.setText("Назва") # Name
+    window.lbl_arch.setText("Архітэктура") # Architecture
 
     # Translations for Machine tab
-
-    # i386 and x64
-    window.label_17.setText("Працэсар") # CPU
-    window.label_18.setText("Машына") # Machine
-    window.label_19.setText("АЗП у MB") # RAM in MB
+    window.lbl_cpu.setText("Працэсар") # CPU
+    window.lbl_machine.setText("Машына") # Machine
+    window.lbl_ram.setText("АЗП у MB") # RAM in MB
 
     i = 0
 
-    while i < window.comboBox_11.count():
-        if window.comboBox_11.itemText(i) == "Let QEMU decide" or window.comboBox_11.itemText(i) == "QEMU überlassen":
-            window.comboBox_11.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_cpu.count():
+        if window.cb_cpu.itemText(i) == "Let QEMU decide" or window.cb_cpu.itemText(i) == "QEMU überlassen":
+            window.cb_cpu.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_12.count():
-        if window.comboBox_12.itemText(i) == "Let QEMU decide" or window.comboBox_12.itemText(i) == "QEMU überlassen":
-            window.comboBox_12.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # PowerPC
-    window.label_20.setText("Працэсар") # CPU
-    window.label_22.setText("Машына") # Machine
-    window.label_21.setText("АЗП у MB") # RAM in MB
-
-    i = 0
-
-    while i < window.comboBox_13.count():
-        if window.comboBox_13.itemText(i) == "Let QEMU decide" or window.comboBox_13.itemText(i) == "QEMU überlassen":
-            window.comboBox_13.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    i = 0
-
-    while i < window.comboBox_14.count():
-        if window.comboBox_14.itemText(i) == "Let QEMU decide" or window.comboBox_14.itemText(i) == "QEMU überlassen":
-            window.comboBox_14.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # MIPS
-    window.label_23.setText("Працэсар") # CPU
-    window.label_25.setText("Машына") # Machine
-    window.label_24.setText("АЗП у MB") # RAM in MB
-
-    i = 0
-
-    while i < window.comboBox_15.count():
-        if window.comboBox_15.itemText(i) == "Let QEMU decide" or window.comboBox_15.itemText(i) == "QEMU überlassen":
-            window.comboBox_15.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    i = 0
-
-    while i < window.comboBox_16.count():
-        if window.comboBox_16.itemText(i) == "Let QEMU decide" or window.comboBox_16.itemText(i) == "QEMU überlassen":
-            window.comboBox_16.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    # ARM
-    window.label_26.setText("Працэсар") # CPU
-    window.label_28.setText("Машына") # Machine
-    window.label_27.setText("АЗП у MB") # RAM in MB
-
-    i = 0
-
-    while i < window.comboBox_17.count():
-        if window.comboBox_17.itemText(i) == "Let QEMU decide" or window.comboBox_17.itemText(i) == "QEMU überlassen":
-            window.comboBox_17.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
-            break
-
-        i += 1
-
-    i = 0
-
-    while i < window.comboBox_18.count():
-        if window.comboBox_18.itemText(i) == "Let QEMU decide" or window.comboBox_18.itemText(i) == "QEMU überlassen":
-            window.comboBox_18.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_machine.count():
+        if window.cb_machine.itemText(i) == "Let QEMU decide" or window.cb_machine.itemText(i) == "QEMU überlassen":
+            window.cb_machine.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
     # Translations for VHD tab
-    window.label_3.setText("Выкарыстанне VHD") # VHD usage
-    window.label_4.setText("Шлях да VHD") # VHD path
-    window.label_5.setText("Фармат файла VHD") # VHD file format
-    window.label_6.setText("Максімальны памер") # Maximum size
-    window.pushButton_3.setText("Агляд") # Browse
+    window.lbl_vhdu.setText("Выкарыстанне VHD") # VHD usage
+    window.lbl_vhdp.setText("Шлях да VHD") # VHD path
+    window.lbl_vhdf.setText("Фармат файла VHD") # VHD file format
+    window.lbl_maxsize.setText("Максімальны памер") # Maximum size
+    window.btn_vhdp.setText("Агляд") # Browse
     
     # Combobox for VHD usage
     i = 0
 
-    while i < window.comboBox_2.count():
-        if window.comboBox_2.itemText(i) == "Create a new virtual hard drive":
-            window.comboBox_2.setItemText(i, "Стварыць новы віртуальны жорсткі дыск") # Create a new virtual hard drive
+    while i < window.cb_vhdu.count():
+        if window.cb_vhdu.itemText(i) == "Create a new virtual hard drive":
+            window.cb_vhdu.setItemText(i, "Стварыць новы віртуальны жорсткі дыск") # Create a new virtual hard drive
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_2.count():
-        if window.comboBox_2.itemText(i) == "Add an existing virtual hard drive":
-            window.comboBox_2.setItemText(i, "Дадаць існуючы віртуальны жорсткі дыск") # Add an existing virtual hard drive
+    while i < window.cb_vhdu.count():
+        if window.cb_vhdu.itemText(i) == "Add an existing virtual hard drive":
+            window.cb_vhdu.setItemText(i, "Дадаць існуючы віртуальны жорсткі дыск") # Add an existing virtual hard drive
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_2.count():
-        if window.comboBox_2.itemText(i) == "Don't add a virtual hard drive":
-            window.comboBox_2.setItemText(i, "Не дадаваць віртуальны жорсткі дыск") # Don't add a virtual hard drive
+    while i < window.cb_vhdu.count():
+        if window.cb_vhdu.itemText(i) == "Don't add a virtual hard drive":
+            window.cb_vhdu.setItemText(i, "Не дадаваць віртуальны жорсткі дыск") # Don't add a virtual hard drive
             break
 
         i += 1
 
-    window.label_70.setText("CD controller 1") # CD controller 1
-    window.label_72.setText("CD controller 2") # CD controller 2
+    window.lbl_cdc1.setText("CD controller 1") # CD controller 1
+    window.lbl_cdc2.setText("CD controller 2") # CD controller 2
 
     i = 0
 
-    while i < window.comboBox_44.count():
-        if window.comboBox_44.itemText(i) == "Let QEMU decide" or window.comboBox_44.itemText(i) == "QEMU überlassen":
-            window.comboBox_44.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_cdc1.count():
+        if window.cb_cdc1.itemText(i) == "Let QEMU decide" or window.cb_cdc1.itemText(i) == "QEMU überlassen":
+            window.cb_cdc1.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
     i = 0
 
-    while i < window.comboBox_45.count():
-        if window.comboBox_45.itemText(i) == "Let QEMU decide" or window.comboBox_45.itemText(i) == "QEMU überlassen":
-            window.comboBox_45.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_cdc2.count():
+        if window.cb_cdc2.itemText(i) == "Let QEMU decide" or window.cb_cdc2.itemText(i) == "QEMU überlassen":
+            window.cb_cdc2.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
-    window.label_73.setText("HDD controller") # HDD controller
+    window.lbl_hddc.setText("HDD controller") # HDD controller
 
     i = 0
 
-    while i < window.comboBox_46.count():
-        if window.comboBox_46.itemText(i) == "Let QEMU decide" or window.comboBox_46.itemText(i) == "QEMU überlassen":
-            window.comboBox_46.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
+    while i < window.cb_hddc.count():
+        if window.cb_hddc.itemText(i) == "Let QEMU decide" or window.cb_hddc.itemText(i) == "QEMU überlassen":
+            window.cb_hddc.setItemText(i, "Няхай QEMU вырашае") # Let QEMU decide
             break
 
         i += 1
 
     # Translations for Peripherals tab
-    window.label_7.setText("Тып мышы") # Mouse type
-    window.label_8.setText("Тып клавіятуры") # Keyboard type
+    window.lbl_mouse.setText("Тып мышы") # Mouse type
+    window.lbl_kbdtype.setText("Тып клавіятуры") # Keyboard type
     
     # Translations for BIOS tab
     # Location of external BIOS file (Leave empty to use the default BIOS)
-    window.label_11.setText("Размяшчэнне знешняга файла BIOS (Пакіньце пустым, каб выкарыстоўваць BIOS па змаўчанні)")
-    window.label_12.setText("Вонкавы файл BIOS") # External BIOS file
-    window.pushButton_4.setText("Агляд") # Browse
+    window.lbl_biosloc.setText("Размяшчэнне знешняга файла BIOS (Пакіньце пустым, каб выкарыстоўваць BIOS па змаўчанні)")
+    window.lbl_biosf.setText("Вонкавы файл BIOS") # External BIOS file
+    window.btn_biosf.setText("Агляд") # Browse
 
     # Translations for Linux tab
-    window.label_13.setText("Ядро Linux") # Linux kernel
-    window.label_14.setText("Выява initrd Linux") # Linux initrd image
-    window.label_15.setText("Linux cmd arguments") # Linux cmd arguments
-    window.pushButton_5.setText("Агляд") # Browse
-    window.pushButton_6.setText("Агляд") # Browse
+    window.lbl_kernel.setText("Ядро Linux") # Linux kernel
+    window.lbl_initrd.setText("Выява initrd Linux") # Linux initrd image
+    window.lbl_cmd.setText("Аргументы Linux cmd") # Linux cmd arguments
+    window.btn_kernel.setText("Агляд") # Browse
+    window.btn_initrd.setText("Агляд") # Browse
 
     # Translations for Additional components tab
-    window.label_9.setText("VGA") # VGA
-    window.label_10.setText("Network adapter") # Network adapter
-    window.label_16.setText("Гукавая карта") # Sound card
-    window.label_29.setText("Дадатковыя аргументы (пры неабходнасці)") # Additional arguments (if necessary)
-    window.label_30.setText("Ядра працэсара") # CPU cores
-    window.checkBox.setText("Дадаць падтрымку USB") # Add USB support
-    window.label_36.setText("Acceleration") # Acceleration
+    window.lbl_vga.setText("VGA") # VGA
+    window.lbl_net.setText("Сетка") # Network adapter
+    window.lbl_sound.setText("Гукавая карта") # Sound card
+    window.lbl_addargs.setText("Дадатковыя аргументы (пры неабходнасці)") # Additional arguments (if necessary)
+    window.lbl_cpuc.setText("Ядра працэсара") # CPU cores
+    window.chb_usb.setText("Дадаць падтрымку USB") # Add USB support
+    window.lbl_accel.setText("Acceleration") # Acceleration
 
 def translateErrDialogBE(window, errcode):
     window.setWindowTitle(f"EmuGUI - Error")

@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from PySide6 import QtGui
-from uiScripts.ui_EditVM import Ui_Dialog
+from uiScripts.ui_EditVM2 import Ui_Dialog
 import sqlite3
 import platform
 
@@ -29,6 +29,7 @@ import errors.logman
 import errors.logID
 import errors.errCodes
 from dialogExecution.errDialog import ErrDialog
+import plugins.pluginmgr.hw_reader as hwpr # HWPR = HardWare Plug-in Reader
 
 class EditVMNewDialog(QDialog, Ui_Dialog):
     def __init__(self, parent=None):
@@ -43,6 +44,7 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         self.setupUi(self)
         self.connectSignalsSlots()
         self.tabWidget.setCurrentIndex(0)
+        self.hw_plugins = hwpr.read_hw_plugin()
         self.vmSpecs = self.readTempVmFile()
         self.langDetect()
         
@@ -57,23 +59,23 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
             )
 
     def connectSignalsSlots(self):
-        self.pushButton.clicked.connect(self.close)
-        self.pushButton_2.clicked.connect(self.finishCreation)
-        self.comboBox_2.currentTextChanged.connect(self.vhdAddingChange)
-        self.comboBox.currentTextChanged.connect(self.archChanged)
-        self.pushButton_3.clicked.connect(self.vhdBrowseLocation)
-        self.pushButton_4.clicked.connect(self.extBiosFileLocation)
-        self.pushButton_5.clicked.connect(self.linuxKernelBrowseLocation)
-        self.pushButton_6.clicked.connect(self.linuxInitridBrowseLocation)
+        self.btn_cancel.clicked.connect(self.close)
+        self.btn_ok.clicked.connect(self.finishCreation)
+        self.cb_vhdu.currentTextChanged.connect(self.vhdAddingChange)
+        self.cb_arch.currentTextChanged.connect(self.archChanged)
+        self.btn_vhdp.clicked.connect(self.vhdBrowseLocation)
+        self.btn_biosf.clicked.connect(self.extBiosFileLocation)
+        self.btn_kernel.clicked.connect(self.linuxKernelBrowseLocation)
+        self.btn_initrd.clicked.connect(self.linuxInitridBrowseLocation)
 
         # For new and existing
-        self.lineEdit_2.setEnabled(True)
-        self.pushButton_3.setEnabled(True)
+        self.le_vhdp.setEnabled(True)
+        self.btn_vhdp.setEnabled(True)
 
         # For new
-        self.comboBox_3.setEnabled(False)
-        self.spinBox.setEnabled(False)
-        self.comboBox_4.setEnabled(False)
+        self.cb_vhdf.setEnabled(False)
+        self.sb_maxsize.setEnabled(False)
+        self.cb_hddc.setEnabled(False)
 
         self.vhdAddingChange()
     
@@ -476,35 +478,35 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         with open("translations/addnovhd.txt", "r+", encoding="utf8") as noVhdFile:
             noVhdContent = noVhdFile.read()
 
-        if creNewVhdContent.__contains__(self.comboBox_2.currentText()):
+        if creNewVhdContent.__contains__(self.cb_vhdu.currentText()):
             # For new and existing
-            self.lineEdit_2.setEnabled(True)
-            self.pushButton_3.setEnabled(True)
+            self.le_vhdp.setEnabled(True)
+            self.btn_vhdp.setEnabled(True)
 
             # For new
-            self.comboBox_3.setEnabled(True)
-            self.spinBox.setEnabled(True)
-            self.comboBox_4.setEnabled(True)
+            self.cb_vhdf.setEnabled(True)
+            self.sb_maxsize.setEnabled(True)
+            self.cb_hddc.setEnabled(True)
 
-        elif addExistVhdContent.__contains__(self.comboBox_2.currentText()):
+        elif addExistVhdContent.__contains__(self.cb_vhdu.currentText()):
             # For new and existing
-            self.lineEdit_2.setEnabled(True)
-            self.pushButton_3.setEnabled(True)
+            self.le_vhdp.setEnabled(True)
+            self.btn_vhdp.setEnabled(True)
 
             # For new
-            self.comboBox_3.setEnabled(False)
-            self.spinBox.setEnabled(False)
-            self.comboBox_4.setEnabled(False)
+            self.cb_vhdf.setEnabled(False)
+            self.sb_maxsize.setEnabled(False)
+            self.cb_hddc.setEnabled(False)
 
-        elif noVhdContent.__contains__(self.comboBox_2.currentText()):
+        elif noVhdContent.__contains__(self.cb_vhdu.currentText()):
             # For new and existing
-            self.lineEdit_2.setEnabled(False)
-            self.pushButton_3.setEnabled(False)
+            self.le_vhdp.setEnabled(False)
+            self.btn_vhdp.setEnabled(False)
 
             # For new
-            self.comboBox_3.setEnabled(False)
-            self.spinBox.setEnabled(False)
-            self.comboBox_4.setEnabled(False)
+            self.cb_vhdf.setEnabled(False)
+            self.sb_maxsize.setEnabled(False)
+            self.cb_hddc.setEnabled(False)
 
     def vhdBrowseLocation(self):
         with open("translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
@@ -517,59 +519,246 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
             filename, filter = QFileDialog.getSaveFileName(parent=self, caption='Save VHD file', dir='.', filter='Hard disk file (*.img);;QCOW2 disk image (*.qcow2);;QCOW disk image (*.qcow);;VirtualBox disk image (*.vdi);;VMware disk file (*.vmdk);;Virtual hard disk file with extra features (*.vhdx);;Virtual PC hard disks (*.vpc);;All files (*.*)')
 
             if filename:
-                self.lineEdit_2.setText(filename)
+                self.le_vhdp.setText(filename)
 
         elif addExistVhdContent.__contains__(self.comboBox_2.currentText()):        
             filename, filter = QFileDialog.getOpenFileName(parent=self, caption='Open VHD file', dir='.', filter='Hard disk file (*.img);;QCOW2 disk image (*.qcow2);;QCOW disk image (*.qcow);;VirtualBox disk image (*.vdi);;VMware disk file (*.vmdk);;Virtual hard disk file with extra features (*.vhdx);;Virtual PC hard disks (*.vpc);;All files (*.*)')
 
             if filename:
-                self.lineEdit_2.setText(filename)
+                self.le_vhdp.setText(filename)
 
     def archChanged(self):
-        if self.comboBox.currentText() == "i386" or self.comboBox.currentText() == "amd64":
-            self.stackedWidget.setCurrentIndex(0)
+        while 1 < self.cb_machine.count():
+            self.cb_machine.removeItem(1)
 
-        elif self.comboBox.currentText() == "ppc" or self.comboBox.currentText() == "ppc64":
-            self.stackedWidget.setCurrentIndex(1)
+        while 1 < self.cb_cpu.count():
+            self.cb_cpu.removeItem(1)
 
-        elif self.comboBox.currentText() == "mips" or self.comboBox.currentText() == "mipsel":
-            self.stackedWidget.setCurrentIndex(2)
+        if self.cb_arch.currentText() == "i386" or self.cb_arch.currentText() == "x86_64":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["x86_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["x86_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "mipsel":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["mipsel_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["mipsel_cpus"])
+
+                except:
+                    pass
         
-        elif self.comboBox.currentText() == "mips64" or self.comboBox.currentText() == "mips64el":
-            self.stackedWidget.setCurrentIndex(2)
+        elif self.cb_arch.currentText() == "ppc" or self.cb_arch.currentText() == "ppc64":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["ppc_machines"])
 
-        elif self.comboBox.currentText() == "arm" or self.comboBox.currentText() == "aarch64":
-            self.stackedWidget.setCurrentIndex(3)
+                except:
+                    pass
 
-        elif self.comboBox.currentText() == "sparc":
-            self.stackedWidget.setCurrentIndex(4)
+                try:
+                    self.cb_cpu.addItems(plugin["ppc_cpus"])
 
-        elif self.comboBox.currentText() == "sparc64":
-            self.stackedWidget.setCurrentIndex(5)
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "mips64el":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["mips64el_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["mips64el_cpus"])
+
+                except:
+                    pass
+                
+        elif self.cb_arch.currentText() == "aarch64":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["aarch64_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["aarch64_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "arm":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["arm_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["arm_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "sparc":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["sparc_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["sparc_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "sparc64":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["sparc64_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["sparc64_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "mips":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["mips_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["mips_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "mips64":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["mips64_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["mips64_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "alpha":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["alpha_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["alpha_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "riscv32":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["riscv32_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["riscv32_cpus"])
+
+                except:
+                    pass
+
+        elif self.cb_arch.currentText() == "riscv64":
+            for plugin in self.hw_plugins:
+                try:
+                    self.cb_machine.addItems(plugin["riscv64_machines"])
+
+                except:
+                    pass
+
+                try:
+                    self.cb_cpu.addItems(plugin["riscv64_cpus"])
+
+                except:
+                    pass
 
     def extBiosFileLocation(self):
         filename, filter = QFileDialog.getOpenFileName(parent=self, caption='Select BIOS file', dir='.', filter='BIN files (*.bin);;All files (*.*)')
 
         if filename:
-            self.lineEdit_4.setText(filename)
+            self.le_biosf.setText(filename)
 
     def linuxKernelBrowseLocation(self):
         filename, filter = QFileDialog.getOpenFileName(parent=self, caption='Select Linux kernel', dir='.', filter='All files (*.*)')
 
         if filename:
-            self.lineEdit_5.setText(filename)
+            self.le_kernel.setText(filename)
 
     def linuxInitridBrowseLocation(self):
         filename, filter = QFileDialog.getOpenFileName(parent=self, caption='Select Linux initrid image', dir='.', filter='IMG files (*.img);;All files (*.*)')
 
         if filename:
-            self.lineEdit_6.setText(filename)
+            self.le_initrd.setText(filename)
 
-    def linuxInitridBrowseLocation(self):
-        filename, filter = QFileDialog.getOpenFileName(parent=self, caption='Select Linux initrid image', dir='.', filter='IMG files (*.img);;All files (*.*)')
+    def setupCB(self):
+        for plugin in self.hw_plugins:
+            try:
+                self.cb_vga.addItems(plugin["graphics"])
 
-        if filename:
-            self.lineEdit_6.setText(filename)
+            except:
+                pass
+
+            try:
+                self.cb_net.addItems(plugin["networking"])
+
+            except:
+                pass
+
+            try:
+                self.cb_sound.addItems(plugin["sound"])
+
+            except:
+                pass
+
+            try:
+                self.cb_usb.addItems(plugin["usb_controllers"])
+
+            except:
+                pass
 
     def readTempVmFile(self):
         with open("translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
@@ -602,51 +791,81 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
 
         # Setting VM variables
 
-        self.lineEdit.setText(vmSpecs[0])
+        self.le_name.setText(vmSpecs[0])
         self.setWindowTitle(f"EmuGUI - Edit {vmSpecs[0]}")
 
         i = 0
 
-        while i < self.comboBox.count():
-            if self.comboBox.itemText(i) == vmSpecs[1]:
-                self.comboBox.setCurrentIndex(i)
+        while i < self.cb_arch.count():
+            if self.cb_arch.itemText(i) == vmSpecs[1]:
+                self.cb_arch.setCurrentIndex(i)
                 break
 
             i += 1
 
         self.archChanged()
 
-        if vmSpecs[1] == "i386" or vmSpecs[1] == "x86_64":
+        i = 0
+
+        while i < self.cb_machine.count():
+            if letQemuDecideContent.__contains__(self.cb_machine.itemText(i)):
+                if vmSpecs[2] == "Let QEMU decide":
+                    self.cb_machine.setCurrentIndex(i)
+                    break
+
+            elif self.cb_machine.itemText(i) == vmSpecs[2]:
+                self.cb_machine.setCurrentIndex(i)
+                break
+
+            i += 1
+
+        i = 0
+
+        while i < self.cb_cpu.count():
+            if letQemuDecideContent.__contains__(self.cb_cpu.itemText(i)):
+                if vmSpecs[3] == "Let QEMU decide":
+                    self.cb_cpu.setCurrentIndex(i)
+                    break
+
+            if self.cb_cpu.itemText(i) == vmSpecs[3]:
+                self.cb_cpu.setCurrentIndex(i)
+                break
+
+            i += 1
+
+        self.sb_ram.setValue(int(vmSpecs[4]))
+
+        """ if vmSpecs[1] == "i386" or vmSpecs[1] == "x86_64":
             self.machineCpuI386Amd64(vmSpecs[2], vmSpecs[3])
-            self.spinBox_2.setValue(int(vmSpecs[4]))
+            self.sb_ram.setValue(int(vmSpecs[4]))
 
         elif vmSpecs[1] == "mips64el" or vmSpecs[1] == "mipsel" or vmSpecs[1] == "mips64" or vmSpecs[1] == "mips":
             self.machineCpuMips64el(vmSpecs[2], vmSpecs[3])
-            self.spinBox_4.setValue(int(vmSpecs[4]))
+            self.sb_ram.setValue(int(vmSpecs[4]))
 
         elif vmSpecs[1] == "ppc" or vmSpecs[1] == "ppc64":
             self.machineCpuPpc(vmSpecs[2], vmSpecs[3])
-            self.spinBox_3.setValue(int(vmSpecs[4]))
+            self.sb_ram.setValue(int(vmSpecs[4]))
 
         elif vmSpecs[1] == "aarch64" or vmSpecs[1] == "arm":
             self.machineCpuAarch64(vmSpecs[2], vmSpecs[3])
-            self.spinBox_5.setValue(int(vmSpecs[4]))
+            self.sb_ram.setValue(int(vmSpecs[4]))
 
         elif vmSpecs[1] == "sparc":
             self.machineSparc(vmSpecs[2])
-            self.spinBox_7.setValue(int(vmSpecs[4]))
+            self.sb_ram.setValue(int(vmSpecs[4]))
 
         elif vmSpecs[1] == "sparc64":
             self.machineSparc64(vmSpecs[2])
-            self.spinBox_8.setValue(int(vmSpecs[4]))
+            self.sb_ram.setValue(int(vmSpecs[4])) """
 
         if vmSpecs[5] != "NULL":
-            self.lineEdit_2.setText(vmSpecs[5])
+            self.le_vhdp.setText(vmSpecs[5])
             i = 0
 
-            while i < self.comboBox_2.count():
-                if addExistVhdContent.__contains__(self.comboBox_2.itemText(i)): #self.comboBox_2.itemText(i) == "Add existing virtual hard drive" or self.comboBox_2.itemText(i) == "Existierende virtuelle Festplatte anfügen":
-                    self.comboBox_2.setCurrentIndex(i)
+            while i < self.cb_vhdu.count():
+                if addExistVhdContent.__contains__(self.cb_vhdu.itemText(i)): #self.comboBox_2.itemText(i) == "Add existing virtual hard drive" or self.comboBox_2.itemText(i) == "Existierende virtuelle Festplatte anfügen":
+                    self.cb_vhdu.setCurrentIndex(i)
                     break
 
                 i += 1
@@ -654,34 +873,35 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         else:
             i = 0
 
-            while i < self.comboBox_2.count():
-                if noVhdContent.__contains__(self.comboBox_2.itemText(i)): #self.comboBox_2.itemText(i) == "Don't add a virtual hard drive" or self.comboBox_2.itemText(i) == "Keine virtuelle Festplatte anfügen":
-                    self.comboBox_2.setCurrentIndex(i)
+            while i < self.cb_vhdu.count():
+                if noVhdContent.__contains__(self.cb_vhdu.itemText(i)): #self.comboBox_2.itemText(i) == "Don't add a virtual hard drive" or self.comboBox_2.itemText(i) == "Keine virtuelle Festplatte anfügen":
+                    self.cb_vhdu.setCurrentIndex(i)
                     break
 
                 i += 1
 
         self.vhdAddingChange()
+        self.setupCB()
 
         i = 0
 
-        while i < self.comboBox_7.count():
+        while i < self.cb_vga.count():
             if vmSpecs[6] == "Let QEMU decide":
-                if letQemuDecideContent.__contains__(self.comboBox_7.itemText(i)):
-                    self.comboBox_7.setCurrentIndex(i)
+                if letQemuDecideContent.__contains__(self.cb_vga.itemText(i)):
+                    self.cb_vga.setCurrentIndex(i)
                     break
 
-            elif self.comboBox_7.itemText(i) == vmSpecs[6]:
-                self.comboBox_7.setCurrentIndex(i)
+            elif self.cb_vga.itemText(i) == vmSpecs[6]:
+                self.cb_vga.setCurrentIndex(i)
                 break
 
             i += 1
 
         i = 0
 
-        while i < self.comboBox_8.count():
-            if self.comboBox_8.itemText(i) == vmSpecs[7]:
-                self.comboBox_8.setCurrentIndex(i)
+        while i < self.cb_net.count():
+            if self.cb_net.itemText(i) == vmSpecs[7]:
+                self.cb_net.setCurrentIndex(i)
                 break
 
             i += 1
@@ -689,118 +909,121 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         if vmSpecs[8] == "1":
             self.checkBox_2.setChecked(True)
 
-        self.lineEdit_3.setText(vmSpecs[10])
+        self.le_biosloc.setText(vmSpecs[10])
 
         if vmSpecs[9] == "1":
             self.checkBox_3.setChecked(True)
 
-        self.lineEdit_8.setText(vmSpecs[11])
+        self.le_addargs.setText(vmSpecs[11])
 
         i = 0
 
-        while i < self.comboBox_10.count():
-            if self.comboBox_10.itemText(i) == vmSpecs[12]:
-                self.comboBox_10.setCurrentIndex(i)
+        while i < self.cb_sound.count():
+            if self.cb_sound.itemText(i) == vmSpecs[12]:
+                self.cb_sound.setCurrentIndex(i)
                 break
 
             i += 1
 
-        self.lineEdit_5.setText(vmSpecs[13])
-        self.lineEdit_6.setText(vmSpecs[14])
-        self.lineEdit_7.setText(vmSpecs[15])
+        self.le_kernel.setText(vmSpecs[13])
+        self.le_initrd.setText(vmSpecs[14])
+        self.le_cmd.setText(vmSpecs[15])
 
         i = 0
 
-        while i < self.comboBox_5.count():
-            if self.comboBox_5.itemText(i) == vmSpecs[16]:
-                self.comboBox_5.setCurrentIndex(i)
+        while i < self.cb_mouse.count():
+            if self.cb_mouse.itemText(i) == vmSpecs[16]:
+                self.cb_mouse.setCurrentIndex(i)
                 break
 
             i += 1
 
-        self.lineEdit_4.setText(vmSpecs[18])
-        self.spinBox_6.setValue(int(vmSpecs[17]))
+        self.le_biosf.setText(vmSpecs[18])
+        self.sb_cpuc.setValue(int(vmSpecs[17]))
 
         i = 0
 
-        while i < self.comboBox_6.count():
-            if self.comboBox_6.itemText(i) == vmSpecs[19]:
-                self.comboBox_6.setCurrentIndex(i)
-                break
-
-            i += 1
-
-        if vmSpecs[20] == "1":
-            self.checkBox.setChecked(True)
-
-        i = 0
-
-        while i < self.comboBox_9.count():
-            if self.comboBox_9.itemText(i) == vmSpecs[21]:
-                self.comboBox_9.setCurrentIndex(i)
+        while i < self.cb_kbdtype.count():
+            if self.cb_kbdtype.itemText(i) == vmSpecs[19]:
+                self.cb_kbdtype.setCurrentIndex(i)
                 break
 
             i += 1
 
         if vmSpecs[20] == "1":
-            self.checkBox.setChecked(True)
+            self.chb_usb.setChecked(True)
 
         i = 0
 
-        while i < self.comboBox_19.count():
-            if self.comboBox_19.itemText(i) == vmSpecs[22]:
-                self.comboBox_19.setCurrentIndex(i)
+        while i < self.cb_usb.count():
+            if self.cb_usb.itemText(i) == vmSpecs[21]:
+                self.cb_usb.setCurrentIndex(i)
                 break
 
             i += 1
 
         i = 0
 
-        while i < self.comboBox_22.count():
-            if self.comboBox_22.itemText(i) == vmSpecs[23]:
-                self.comboBox_22.setCurrentIndex(i)
+        while i < self.cb_kbdlayout.count():
+            if self.cb_kbdlayout.itemText(i) == vmSpecs[22]:
+                self.cb_kbdlayout.setCurrentIndex(i)
                 break
 
             i += 1
 
         i = 0
 
-        while i < self.comboBox_44.count():
+        while i < self.cb_accel.count():
+            if vmSpecs[23] == "HAXM":
+                if self.cb_accel.itemText(i) == "HAXM (depreciated)":
+                    self.cb_accel.setCurrentIndex(i)
+                    break
+
+            else:
+                if self.cb_accel.itemText(i) == vmSpecs[23]:
+                    self.cb_accel.setCurrentIndex(i)
+                    break
+
+            i += 1
+
+        i = 0
+
+        while i < self.cb_cdc1.count():
             if vmSpecs[24] == "Let QEMU decide":
-                if letQemuDecideContent.__contains__(self.comboBox_44.itemText(i)):
-                    self.comboBox_44.setCurrentIndex(i)
+                if letQemuDecideContent.__contains__(self.cb_cdc1.itemText(i)):
+                    self.cb_cdc1.setCurrentIndex(i)
                     break
 
-            elif self.comboBox_44.itemText(i) == vmSpecs[24]:
-                self.comboBox_44.setCurrentIndex(i)
+            elif self.cb_cdc1.itemText(i) == vmSpecs[24]:
+                self.cb_cdc1.setCurrentIndex(i)
                 break
 
             i += 1
 
         i = 0
 
-        while i < self.comboBox_45.count():
+        while i < self.cb_cdc2.count():
             if vmSpecs[25] == "Let QEMU decide":
-                if letQemuDecideContent.__contains__(self.comboBox_45.itemText(i)):
-                    self.comboBox_45.setCurrentIndex(i)
+                if letQemuDecideContent.__contains__(self.cb_cdc2.itemText(i)):
+                    self.cb_cdc2.setCurrentIndex(i)
                     break
 
-            elif self.comboBox_45.itemText(i) == vmSpecs[25]:
-                self.comboBox_45.setCurrentIndex(i)
+            elif self.cb_cdc2.itemText(i) == vmSpecs[25]:
+                self.cb_cdc2.setCurrentIndex(i)
                 break
 
             i += 1
             
         i = 0
 
-        while i < self.comboBox_46.count():
+        while i < self.cb_hddc.count():
             if vmSpecs[26] == "Let QEMU decide":
-                if letQemuDecideContent.__contains__(self.comboBox_46.itemText(i)):
-                    self.comboBox_46.setCurrentIndex(i)
+                if letQemuDecideContent.__contains__(self.cb_hddc.itemText(i)):
+                    self.cb_hddc.setCurrentIndex(i)
                     break
 
-            elif self.comboBox_46.itemText(i) == vmSpecs[25]:
-                self.comboBox_46.setCurrentIndex(i)
+            elif self.cb_hddc.itemText(i) == vmSpecs[25]:
+                self.cb_hddc.setCurrentIndex(i)
                 break
 
             i += 1
@@ -824,44 +1047,13 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
 
         cursor = connection.cursor()
 
-        if self.comboBox.currentText() == "i386" or self.comboBox.currentText() == "x86_64":
-            machine = self.comboBox_12.currentText()
-            cpu = self.comboBox_11.currentText()
+        machine = self.cb_machine.currentText()
+        cpu = self.cb_cpu.currentText()
 
-            if cpu.startswith("Icelake-Client"):
-                cpu = "Icelake-Client"
+        if cpu.startswith("Icelake-Client"):
+            cpu = "Icelake-Client"
 
-            ram = self.spinBox_2.value()
-        
-        elif self.comboBox.currentText() == "ppc" or self.comboBox.currentText() == "ppc64":
-            machine = self.comboBox_14.currentText()
-            cpu = self.comboBox_13.currentText()
-            ram = self.spinBox_3.value()
-
-        elif self.comboBox.currentText() == "mips64el" or self.comboBox.currentText() == "mipsel":
-            machine = self.comboBox_16.currentText()
-            cpu = self.comboBox_15.currentText()
-            ram = self.spinBox_4.value()
-
-        elif self.comboBox.currentText() == "mips64" or self.comboBox.currentText() == "mips":
-            machine = self.comboBox_16.currentText()
-            cpu = self.comboBox_15.currentText()
-            ram = self.spinBox_4.value()
-
-        elif self.comboBox.currentText() == "aarch64" or self.comboBox.currentText() == "arm":
-            machine = self.comboBox_18.currentText()
-            cpu = self.comboBox_17.currentText()
-            ram = self.spinBox_5.value()
-
-        elif self.comboBox.currentText() == "sparc":
-            machine = self.comboBox_20.currentText()
-            cpu = "Let QEMU decide"
-            ram = self.spinBox_7.value()
-
-        elif self.comboBox.currentText() == "sparc64":
-            machine = self.comboBox_21.currentText()
-            cpu = "Let QEMU decide"
-            ram = self.spinBox_8.value()
+        ram = self.sb_ram.value()
 
         if letQemuDecideVariantsStr.__contains__(machine):
             machine = "Let QEMU decide"
@@ -869,11 +1061,11 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         if letQemuDecideVariantsStr.__contains__(cpu):
             cpu = "Let QEMU decide"
 
-        if self.lineEdit_2.text() == "" or self.lineEdit_2.isEnabled() == False:
+        if self.le_vhdp.text() == "" or self.le_vhdp.isEnabled() == False:
             vhd = "NULL"
         
         else:
-            vhd = self.lineEdit_2.text()
+            vhd = self.le_vhdp.text()
 
             if platform.system() == "Windows":
                 tempVmDef = platformSpecific.windowsSpecific.windowsTempVmStarterFile()
@@ -886,7 +1078,7 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
 
             vhdAction = vmSpecsRaw[0]
 
-            if self.comboBox_3.isEnabled():
+            if self.cb_vhdf.isEnabled():
                 vhdAction = "overwrite"
 
             else:
@@ -906,22 +1098,24 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
                 qemu_binary = result[0][0]
                 vhd_size_in_b = None
 
-                if self.comboBox_4.currentText().startswith("K"):
-                    vhd_size_in_b = self.spinBox.value() * 1024
+                if self.cb_maxsize.currentText().startswith("K"):
+                    vhd_size_in_b = self.sb_maxsize.value() * 1024
 
-                elif self.comboBox_4.currentText().startswith("M"):
-                    vhd_size_in_b = self.spinBox.value() * 1024 * 1024
+                elif self.cb_maxsize.currentText().startswith("M"):
+                    vhd_size_in_b = self.sb_maxsize.value() * 1024 * 1024
 
-                elif self.comboBox_4.currentText().startswith("G"):
-                    vhd_size_in_b = self.spinBox.value() * 1024 * 1024 * 1024
+                elif self.cb_maxsize.currentText().startswith("G"):
+                    vhd_size_in_b = self.sb_maxsize.value() * 1024 * 1024 * 1024
 
                 print(vhd_size_in_b)
 
-                if platform.system() == "Windows":
-                    vhd_cmd = f"{qemu_binary} create -f {self.comboBox_3.currentText()} \"{vhd}\" {str(vhd_size_in_b)}"
+                vhd_cmd = f"{qemu_binary} create -f {self.cb_vhdF.currentText()} \"{vhd}\" {str(vhd_size_in_b)}"
+
+                """ if platform.system() == "Windows":
+                    vhd_cmd = f"{qemu_binary} create -f {self.cb_vhdf.currentText()} \"{vhd}\" {str(vhd_size_in_b)}"
 
                 else:
-                    vhd_cmd = f"{qemu_binary} create -f {self.comboBox_3.currentText()} {vhd} {str(vhd_size_in_b)}"
+                    vhd_cmd = f"{qemu_binary} create -f {self.cb_vhdf.currentText()} {vhd} {str(vhd_size_in_b)}" """
 
                 if vhdAction.startswith("overwrite"):
                     subprocess.Popen(vhd_cmd)
@@ -935,7 +1129,8 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
                 print(f"The query was executed successfully, but the virtual disk couldn't be created. Trying to use subprocess.run")
 
                 try:
-                    vhd_cmd_split = vhd_cmd.split(" ")
+                    #vhd_cmd_split = vhd_cmd.split(" ")
+                    vhd_cmd_split = [qemu_binary, "create", "-f", self.cb_vhdF.currentText(), vhd, str(vhd_size_in_b)]
 
                     if vhdAction.startswith("overwrite"):
                         subprocess.run(vhd_cmd_split)
@@ -945,17 +1140,17 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
                 except:
                     print("The virtual disk could not be created. Please check if the path and the QEMU settings are correct.")
 
-        if letQemuDecideVariantsStr.__contains__(self.comboBox_7.currentText()):
+        if letQemuDecideVariantsStr.__contains__(self.cb_vga.currentText()):
             vga = "Let QEMU decide"
         
         else:
-            vga = self.comboBox_7.currentText()
+            vga = self.cb_vga.currentText()
 
-        if self.comboBox_8.currentText() == "none":
+        if self.cb_net.currentText() == "none":
             networkAdapter = "none"
         
         else:
-            networkAdapter = self.comboBox_8.currentText()
+            networkAdapter = self.cb_net.currentText()
 
         if self.checkBox_2.isChecked():
             usbtablet = 1
@@ -969,52 +1164,58 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         else:
             win2k = 0
 
-        ext_bios_dir = self.lineEdit_3.text()
+        ext_bios_dir = self.le_biosloc.text()
 
-        add_args = self.lineEdit_8.text()
+        add_args = self.le_addargs.text()
 
-        if self.checkBox_2.isChecked() or self.checkBox.isChecked() or self.comboBox_5.currentText() == "USB Mouse":
+        if self.checkBox_2.isChecked() or self.chb_usb.isChecked() or self.cb_mouse.currentText() == "USB Mouse":
             usb_support = 1
 
-        elif self.comboBox_5.currentText() == "USB Tablet Device" or self.comboBox_6.currentText() == "USB Keyboard":
+        elif self.cb_mouse.currentText() == "USB Tablet Device" or self.cb_kbdtype.currentText() == "USB Keyboard":
             usb_support = 1
 
         else:
             usb_support = 0
 
-        if sysDefContent.__contains__(self.comboBox_19.currentText()):
+        if sysDefContent.__contains__(self.cb_kbdlayout.currentText()):
             kbdlayout = "en-us"
 
         else:
-            kbdlayout = self.comboBox_19.currentText()
+            kbdlayout = self.cb_kbdlayout.currentText()
 
-        if letQemuDecideVariantsStr.__contains__(self.comboBox_44.currentText()):
+        if letQemuDecideVariantsStr.__contains__(self.cb_cdc1.currentText()):
             cd_control1 = "Let QEMU decide"
         
         else:
-            cd_control1 = self.comboBox_44.currentText()
+            cd_control1 = self.cb_cdc1.currentText()
 
-        if letQemuDecideVariantsStr.__contains__(self.comboBox_45.currentText()):
+        if letQemuDecideVariantsStr.__contains__(self.cb_cdc2.currentText()):
             cd_control2 = "Let QEMU decide"
         
         else:
-            cd_control2 = self.comboBox_45.currentText()
+            cd_control2 = self.cb_cdc2.currentText()
 
-        if letQemuDecideVariantsStr.__contains__(self.comboBox_46.currentText()):
+        if letQemuDecideVariantsStr.__contains__(self.cb_hddc.currentText()):
             hda_control = "Let QEMU decide"
         
         else:
-            hda_control = self.comboBox_46.currentText()
+            hda_control = self.cb_hddc.currentText()
+
+        if self.cb_accel.currentText() == "HAXM (depreciated)":
+            accelerator = "HAXM"
+
+        else:
+            accelerator = self.cb_accel.currentText()
         
         insert_into_vm_database = f"""
         UPDATE virtualmachines
-        SET name = "{self.lineEdit.text()}", architecture = "{self.comboBox.currentText()}", machine = "{machine}", cpu = "{cpu}",
+        SET name = "{self.le_name.text()}", architecture = "{self.cb_arch.currentText()}", machine = "{machine}", cpu = "{cpu}",
         ram = {ram}, hda = "{vhd}", vga = "{vga}", net = "{networkAdapter}", usbtablet = {usbtablet},
-        win2k = {win2k}, dirbios = "{ext_bios_dir}", additionalargs = "{add_args}", sound = "{self.comboBox_10.currentText()}",
-        linuxkernel = "{self.lineEdit_5.text()}", linuxinitrid = "{self.lineEdit_6.text()}", linuxcmd = "{self.lineEdit_7.text()}",
-        mousetype = "{self.comboBox_5.currentText()}", cores = {self.spinBox_6.value()}, filebios = "{self.lineEdit_4.text()}",
-        keyboardtype = "{self.comboBox_6.currentText()}", usbsupport = {usb_support}, usbcontroller = "{self.comboBox_9.currentText()}",
-        kbdtype = "{kbdlayout}", acceltype = "{self.comboBox_22.currentText()}", storagecontrollercd1 = "{cd_control1}",
+        win2k = {win2k}, dirbios = "{ext_bios_dir}", additionalargs = "{add_args}", sound = "{self.cb_sound.currentText()}",
+        linuxkernel = "{self.le_kernel.text()}", linuxinitrid = "{self.le_initrd.text()}", linuxcmd = "{self.le_cmd.text()}",
+        mousetype = "{self.cb_mouse.currentText()}", cores = {self.sb_cpuc.value()}, filebios = "{self.le_biosf.text()}",
+        keyboardtype = "{self.cb_kbdtype.currentText()}", usbsupport = {usb_support}, usbcontroller = "{self.cb_usb.currentText()}",
+        kbdtype = "{kbdlayout}", acceltype = "{accelerator}", storagecontrollercd1 = "{cd_control1}",
         storagecontrollercd2 = "{cd_control2}", hdacontrol = "{hda_control}"
         WHERE name = "{self.vmSpecs[0]}";
         """
