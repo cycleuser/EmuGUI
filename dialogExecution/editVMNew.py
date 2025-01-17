@@ -315,31 +315,31 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
             # For new and existing
             self.le_vhdp.setEnabled(True)
             self.btn_vhdp.setEnabled(True)
+            self.cb_hddc.setEnabled(True)
 
             # For new
             self.cb_vhdf.setEnabled(True)
             self.sb_maxsize.setEnabled(True)
-            self.cb_hddc.setEnabled(True)
 
         elif addExistVhdContent.__contains__(self.cb_vhdu.currentText()):
             # For new and existing
             self.le_vhdp.setEnabled(True)
             self.btn_vhdp.setEnabled(True)
+            self.cb_hddc.setEnabled(True)
 
             # For new
             self.cb_vhdf.setEnabled(False)
             self.sb_maxsize.setEnabled(False)
-            self.cb_hddc.setEnabled(False)
 
         elif noVhdContent.__contains__(self.cb_vhdu.currentText()):
             # For new and existing
             self.le_vhdp.setEnabled(False)
             self.btn_vhdp.setEnabled(False)
+            self.cb_hddc.setEnabled(False)
 
             # For new
             self.cb_vhdf.setEnabled(False)
             self.sb_maxsize.setEnabled(False)
-            self.cb_hddc.setEnabled(False)
 
     def vhdBrowseLocation(self):
         with open(f"{self.exec_folder}translations/createnewvhd.txt", "r+", encoding="utf8") as creNewVhdFile:
@@ -918,7 +918,7 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
 
                 print(vhd_size_in_b)
 
-                vhd_cmd = f"{qemu_binary} create -f {self.cb_vhdF.currentText()} \"{vhd}\" {str(vhd_size_in_b)}"
+                vhd_cmd = f"{qemu_binary} create -f {self.cb_vhdf.currentText()} \"{vhd}\" {str(vhd_size_in_b)}"
 
                 """ if platform.system() == "Windows":
                     vhd_cmd = f"{qemu_binary} create -f {self.cb_vhdf.currentText()} \"{vhd}\" {str(vhd_size_in_b)}"
@@ -939,7 +939,7 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
 
                 try:
                     #vhd_cmd_split = vhd_cmd.split(" ")
-                    vhd_cmd_split = [qemu_binary, "create", "-f", self.cb_vhdF.currentText(), vhd, str(vhd_size_in_b)]
+                    vhd_cmd_split = [qemu_binary, "create", "-f", self.cb_vhdf.currentText(), vhd, str(vhd_size_in_b)]
 
                     if vhdAction.startswith("overwrite"):
                         subprocess.run(vhd_cmd_split)
@@ -954,6 +954,8 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
         
         else:
             vga = self.cb_vga.currentText()
+
+        print(vga)
 
         if self.cb_net.currentText() == "none":
             networkAdapter = "none"
@@ -985,12 +987,14 @@ class EditVMNewDialog(QDialog, Ui_Dialog):
 
         else:
             usb_support = 0
+            
+        kbdlayout = self.cb_kbdlayout.currentText()
 
-        if sysDefContent.__contains__(self.cb_kbdlayout.currentText()):
-            kbdlayout = "en-us"
+        #if sysDefContent.__contains__(self.cb_kbdlayout.currentText()):
+         #   kbdlayout = "en-us"
 
-        else:
-            kbdlayout = self.cb_kbdlayout.currentText()
+        #else:
+         #   kbdlayout = self.cb_kbdlayout.currentText()
 
         if letQemuDecideVariantsStr.__contains__(self.cb_cdc1.currentText()):
             cd_control1 = "Let QEMU decide"
